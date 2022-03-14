@@ -5,7 +5,17 @@ const database = knex(config);
 database.migrate.latest([config]);
 
 const getDevices = ((req, res, next) => {
-   database.table('Device').then((dados) => res.status(200).send(dados), next );
+   database
+      .select(
+        'Device.Id AS id',
+        'Device.CategoryId AS categoryId',
+        'Category.Name AS categoryName',
+        'Device.Color AS color',
+        'Device.PartNumber AS partNumber'
+      )
+      .from('Device')
+      .leftJoin('Category', 'Category.Id', 'Device.CategoryId')
+      .then((dados) => res.status(200).send(dados), next );
 });
 
 const insertDevice = ((req, res, next) => {
