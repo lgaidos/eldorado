@@ -6,7 +6,7 @@ export interface DeviceModel {
     partNumber: number;
   }
 
-  export interface CategoriesModel {
+  export interface CategoryModel {
       id: number;
       name: string;
   }

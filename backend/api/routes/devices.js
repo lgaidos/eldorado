@@ -5,12 +5,12 @@ const  {
     getDevices,
     insertDevice,
     deleteDevice 
-} = require('../controllers/devices.js');
+} = require('../controllers/controllers.js');
 
-router.get('/buscar', getDevices);
+router.get('/get', getDevices);
 
-router.post('/salvar', insertDevice);
+router.post('/save', insertDevice);
 
-router.delete('/excluir/:deviceId', deleteDevice);
+router.delete('/delete/:deviceId', deleteDevice);
 
 module.exports = router;

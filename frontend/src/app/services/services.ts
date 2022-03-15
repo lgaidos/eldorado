@@ -1,34 +1,115 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DeviceModel } from '../interfaces/interfaces';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { CategoryModel, DeviceModel } from '../interfaces/interfaces';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
 export class Services {
 
   constructor(private _http: HttpClient) { }
 
-  private getHeaders() : any {
-    return { 'Content-Type' : 'application/json' }
+  private getHeaders(): any {
+    return {
+      'Content-Type': 'application/json',
+    };
   }
 
-  getDevice(): Observable<DeviceModel[]> {
-    let url = 'http://localhost:8080/api/device/buscar';
+  getDevices(): Observable<DeviceModel[]> {
+    let url = 'http://localhost:8080/api/device/get';
     return this._http
-        .get<any>( url,
+      .get<any>(url,
         {
-            observe: 'response',
-            headers: this.getHeaders()
+          observe: 'response',
+          headers: this.getHeaders()
         })
-        .pipe(
-            map( res => {
-                return res.body;
-            })
-        );
+      .pipe(
+        map(res => {
+          return res.body;
+        })
+      );
+  }
+
+  saveDevice(item: DeviceModel): Observable<any> {
+    let url = "http://localhost:8080/api/device/save";
+    return this._http
+      .post<any>(url, item,
+        {
+          observe: 'response',
+          headers: this.getHeaders()
+        })
+      .pipe( 
+        
+          map( res => {
+            return res.body;
+          })
+      );
+  }
+
+  deleteDevice(deviceId: number): Observable<any> {
+    let url = "http://localhost:8080/api/device/delete/" + deviceId;
+    return this._http
+      .delete<any>(url,
+        {
+          observe: 'response',
+          headers: this.getHeaders()
+        })
+      .pipe( 
+        
+          map( res => {
+            return res.body;
+          })
+      );
+  }
+
+  getCategories(): Observable<CategoryModel[]> {
+    let url = 'http://localhost:8080/api/category/get';
+    return this._http
+      .get<any>(url,
+        {
+          observe: 'response',
+          headers: this.getHeaders()
+        })
+      .pipe(
+        map(res => {
+          return res.body;
+        })
+      );
+  }
+
+  saveCategory(item: CategoryModel): Observable<any> {
+    let url = "http://localhost:8080/api/category/save";
+    return this._http
+      .post<any>(url, item,
+        {
+          observe: 'response',
+          headers: this.getHeaders()
+        })
+      .pipe( 
+        
+          map( res => {
+            return res.body;
+          })
+      );
+  }
+
+  deleteCategory(categoryId: number): Observable<any> {
+    let url = "http://localhost:8080/api/category/delete/" + categoryId;
+    return this._http
+      .delete<any>(url,
+        {
+          observe: 'response',
+          headers: this.getHeaders()
+        })
+      .pipe( 
+        
+          map( res => {
+            return res.body;
+          })
+      );
   }
 
 }
