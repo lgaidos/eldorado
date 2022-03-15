@@ -28,7 +28,6 @@ const insertCategory = (req, res, next) => {
 
         trx.commit;
         console.log('Great success! Category were inserted');
-        res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
         res.status(200).send(JSON.parse('{"response":"ok"}'));
 
       }, next );
@@ -99,7 +98,7 @@ const getDevices = (req, res, next) => {
      .from('Device')
      .leftJoin('Category', 'Device.CategoryId', 'Category.Id' )
      .then((dados) => res.status(200).send(dados), next );
-     
+
 };
 
 const insertDevice = (req, res, next) => {

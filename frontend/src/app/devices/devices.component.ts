@@ -35,13 +35,7 @@ export class DevicesComponent implements OnInit {
     });
   }
 
-  getCategoriesCount(): number {
-    return this.deviceDS.data.length;
-  }
-
   openDialog(item?: DeviceModel): void {
-
-    if (this.getCategoriesCount() > 0) {
 
       let dialogRef = this._dialog.open(DevicesDialogComponent, {
         width: '600px',
@@ -80,10 +74,6 @@ export class DevicesComponent implements OnInit {
         });
 
       });
-
-    }
-    else
-      Swal.fire('Category Not Found!');
 
   }
 
