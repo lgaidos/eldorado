@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CategoryModel, DeviceModel } from '../interfaces/interfaces';
+import { EndPointService } from './endpoint';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ import { CategoryModel, DeviceModel } from '../interfaces/interfaces';
 
 export class Services {
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient,
+    private _endPoint: EndPointService) { }
 
   private getHeaders(): any {
     return {
@@ -19,7 +22,7 @@ export class Services {
   }
 
   getDevices(): Observable<DeviceModel[]> {
-    let url = 'http://localhost:8080/api/device/get';
+    let url = this._endPoint.getRestService('device/get');
     return this._http
       .get<any>(url,
         {
@@ -34,7 +37,7 @@ export class Services {
   }
 
   saveDevice(item: DeviceModel): Observable<any> {
-    let url = "http://localhost:8080/api/device/save";
+    let url =  this._endPoint.getRestService('device/save');
     return this._http
       .post<any>(url, item,
         {
@@ -50,7 +53,7 @@ export class Services {
   }
 
   deleteDevice(deviceId: number): Observable<any> {
-    let url = "http://localhost:8080/api/device/delete/" + deviceId;
+    let url =  this._endPoint.getRestService('device/delete/' + deviceId);
     return this._http
       .delete<any>(url,
         {
@@ -66,7 +69,7 @@ export class Services {
   }
 
   getCategories(): Observable<CategoryModel[]> {
-    let url = 'http://localhost:8080/api/category/get';
+    let url =  this._endPoint.getRestService('category/get');
     return this._http
       .get<any>(url,
         {
@@ -81,7 +84,7 @@ export class Services {
   }
 
   saveCategory(item: CategoryModel): Observable<any> {
-    let url = "http://localhost:8080/api/category/save";
+    let url =  this._endPoint.getRestService('category/save');
     return this._http
       .post<any>(url, item,
         {
@@ -97,7 +100,7 @@ export class Services {
   }
 
   deleteCategory(categoryId: number): Observable<any> {
-    let url = "http://localhost:8080/api/category/delete/" + categoryId;
+    let url =  this._endPoint.getRestService('category/delete/' + categoryId);
     return this._http
       .delete<any>(url,
         {
